@@ -4,12 +4,40 @@
 Arduboy arduboy;
 
 //Variables declared here
+//player x variable on movement
+int playerx = 5;
 int gamestate = 0;
 int justpressed = 0;
 
+//player sprite data
+const unsigned char player[] PROGMEM = {
+    0x20, 0xA8, 0xD8, 0x88, 0x00, 0x00,
+};
+
+//enemy 1 sprite data
+const unsigned char enemy3[] PROGMEM = {
+    0x40, 0xE0, 0xA0, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+//enemy 2 sprite data
+const unsigned char enemy2[] PROGMEM = {
+    0xA0, 0xE0, 0xA0, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+//enemy 3 sprite data
+const unsigned char enemy3[] PROGMEM = {
+    0xA0, 0x40, 0xA0, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+//bullet sprite data
+const unsigned char bullet[] PROGMEM = {
+    0x80, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+};
+
+
 void setup() {
   arduboy.begin();
-  //Seed the random number generator
+  //Seed the random number generator for enamy AI
   srand(7/8);
   //Set the game to 60 frames per second
   arduboy.setFrameRate(60);
@@ -48,6 +76,17 @@ void loop() {
       //Gameplay screen
       arduboy.setCursor(0, 0);
       arduboy.print("Gameplay");
+       //Draw player sprite
+      arduboy.drawBitmap(playerx, player, 5, 4, WHITE);
+      arduboy.display();
+      }
+       if(arduboy.pressed(LEFT_BUTTON)) {
+      playerx = playerx - 1;
+    }
+    if(arduboy.pressed(RIGHT_BUTTON)) {
+      playerx = playerx + 1;
+    }
+      
       break;
    
     case 2:
